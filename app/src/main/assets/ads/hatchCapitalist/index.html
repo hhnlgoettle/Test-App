@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"><meta name="theme-color" content="#ffffff">
+    <title>Interaction Rewarding Ads Sample Ad</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="a sample ad">
+    <script src="https://cdn.trustmeimansoftware.engineer/ira/release.js"></script>
+    <style type="text/css">
+        html, body {
+            font-family: Arial, sans-serif;
+            min-height: 100%;
+            margin: 0;
+        }
+        #ad-container {
+            margin-top: 6vh;
+            width: 100%;
+        }
+        .flex-column {
+            display: flex;
+            flex-direction: column;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .div-center {
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+        }
+        #ad-header {
+        }
+        #ad-content {
+            max-height: 60vh;
+        }
+        #ad-footer {
+            position: absolute;
+            bottom: 0;
+            margin: 0 auto 20px;
+            width: 100%;
+        }
+        #ad-btn-download {
+            border: none;
+            width: fit-content;
+            border-radius: 5px;
+            background: #689f38;
+            font-weight: 400;
+            text-decoration: none;
+            color: white;
+            font-size: large;
+        }
+        .focus-no-outline:focus {
+            outline: none;
+        }
+        .img-egg {
+            max-height: 40vh;
+            object-fit: contain;
+            animation: wiggle 2s infinite;
+        }
+        @keyframes wiggle {
+            0% { transform: rotate(0deg); }
+            60% { transform: rotate(0deg); }
+            65% { transform: rotate(10deg); }
+            75% { transform: rotate(-10deg); }
+            80% { transform: rotate(0deg); }
+            85% { transform: rotate(10deg); }
+            95% { transform: rotate(-10deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+    </style>
+</head>
+<body>
+    <div id="ad-container">
+        <div id="ad-header" class="flex-column text-center">
+            <h1>Hatch Capitalist</h1>
+            <h2>Tap to hatch your first egg!</h2>
+        </div>
+
+        <div id="ad-content">
+            <div id="egg" class="flex-column div-center" >
+                <img id="egg-img" class="div-center img-egg" alt="Here you can see an egg" onclick="tap(event)"/>
+            </div>
+        </div>
+
+        <div id="ad-footer" class="flex-column div-center">
+            <button id="ad-btn-download" class="focus-no-outline">
+                <h3 style="margin: 0; padding: 4px">Download now!</h3>
+            </button>
+        </div>
+    </div>
+</body>
+<script>
+</script>
+
+<script>
+    let hatchState = 0;
+    let imageState = 0;
+
+    let svgHatchStates = [
+      'egg_00.svg',
+      'egg_01.svg',
+      'egg_02.svg',
+      'egg_03.svg',
+      'egg_04.svg',
+      'egg_05.svg',
+      'chick_00.svg'
+    ];
+
+    function tap(event) {
+      hatchState++;
+      if(hatchState % 3 === 0) {
+        imageState++;
+        replaceImage(event);
+      }
+    }
+    function replaceImage(event) {
+      let egg = document.getElementById("egg-img");
+      egg.src = svgHatchStates[Math.min(imageState, svgHatchStates.length -1)];
+      InteractionRewardingAds.isValidEvent(event);
+    }
+
+    function onLoad() {
+      const elem = document.getElementById("egg-img");
+      elem.src = svgHatchStates[0]
+    }
+    onLoad();
+    InteractionRewardingAds.init({desiredDurationMillis: 10000, desiredInteractionCount: svgHatchStates.length -1});
+</script>
+</html>
